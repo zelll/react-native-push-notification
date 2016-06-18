@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.service.notification.StatusBarNotification;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -138,6 +139,13 @@ public class RNPushNotification extends ReactContextBaseJavaModule {
     @ReactMethod
     public void cancelAllLocalNotifications() {
         mRNPushNotificationHelper.cancelAll();
+    }
+
+    @ReactMethod
+    public void cancelActiveNotifications() {
+        for(StatusBarNotification notification : mRNPushNotificationHelper.getActiveNotifications()) {
+            mRNPushNotificationHelper.cancel(notification.getId());
+        }
     }
 
     @ReactMethod

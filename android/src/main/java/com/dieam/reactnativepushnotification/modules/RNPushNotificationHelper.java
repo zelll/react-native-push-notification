@@ -18,6 +18,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
 public class RNPushNotificationHelper {
@@ -217,5 +218,18 @@ public class RNPushNotificationHelper {
         Bundle b = new Bundle();
         b.putString("id", "0");
         getAlarmManager().cancel(getScheduleNotificationIntent(b));
+    }
+
+    public StatusBarNotification[] getActiveNotifications() {
+        NotificationManager notificationManager =
+                (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        return notificationManager.getActiveNotifications();
+    }
+    
+    public void cancel(int id) {
+        NotificationManager notificationManager =
+                (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(id);
     }
 }

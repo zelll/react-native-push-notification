@@ -160,6 +160,7 @@ Notifications._onNotification = function(data, isFromBackground = null) {
 		if ( Platform.OS === 'ios' ) {
 			this.onNotification({
 				foreground: ! isFromBackground,
+				tapped: !!isFromBackground,
 				message: data.getMessage(),
 				data: data.getData(),
 				badge: data.getBadgeCount(),
@@ -169,6 +170,7 @@ Notifications._onNotification = function(data, isFromBackground = null) {
 		} else {
 			var notificationData = {
 				foreground: ! isFromBackground,
+				tapped: !!data.tapped,
 				...data
 			};
 
@@ -204,6 +206,10 @@ Notifications.scheduleLocalNotification = function() {
 
 Notifications.cancelAllLocalNotifications = function() {
 	return this.callNative('cancelAllLocalNotifications', arguments);
+};
+
+Notifications.cancelActiveNotifications = function() {
+	return this.callNative('cancelActiveNotifications', arguments);
 };
 
 Notifications.setApplicationIconBadgeNumber = function() {
